@@ -9,7 +9,7 @@ SpaceHipster.Game.prototype = {
 		this.game.world.setBounds(0,0,1920,1920);
 
 		// generamos la repetición del sprite
-		this.background = this.game.add.tileSprite(0,0, this.game.width, this.game.height, "space");
+		this.background = this.game.add.tileSprite(0,0, this.game.world.width, this.game.world.height, "space");
 
 		// create player
 		this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, "playership");
