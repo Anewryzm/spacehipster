@@ -27,6 +27,5 @@ SpaceHipster.Boot.prototype = {
 		// Sistema de física para los movimientos
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.state.start('Preload');
-		console.log("s")
 	},
 };
