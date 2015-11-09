@@ -21,6 +21,10 @@ SpaceHipster.Game.prototype = {
 		// the camera will follow the player in the world
 		this.game.camera.follow(this.player);
 
+
+		// Generamos los coleccionables
+		this.generateCollectables();
+		// Generamos asteroides
 		this.generateAsteroids();
 
 		// initial score
@@ -44,6 +48,9 @@ SpaceHipster.Game.prototype = {
 		};
 			// colisión entre el jugador y los asteroides
 			this.game.physics.arcade.collide(this.player, this.asteroids, this.hitAsteroid, null, this);
+			
+			// Overlapping between player and collectables
+			this.game.physics.arcade.overlap(this.player, this.collectables, this.collect, null, this);
 	},
 	generateAsteroids: function (){
 		this.asteroids = this.game.add.group();
@@ -84,5 +91,35 @@ SpaceHipster.Game.prototype = {
 		this.player.kill();
 
 		this.game.time.events.add(800, this.gameOver,this);
+	},
+	generateCollectables: function(){
+		this.collectables = this.game.add.group();
+
+		// activando la física
+		this.collectables.enableBody = true;
+		this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
+
+		// phaser's random number generator
+		var numCollectables = this.game.rnd.integerInRange(100,150);
+		var collectable;
+
+		for(var i = 0; i < numCollectables; i++){
+			// agregamos los sprites
+			collectable = this.collectables.create(this.game.world.randomX, this.game.world.randomY, "power");
+			collectable.animations.add("fly", [0,1,2,3], 5, true);
+			collectable.play("fly");
+		};
+	},
+	collect: function(player, collectable){
+		// Play collect sound
+		this.collectSound.play();
+		// Update score
+		this.playerScore++;
+		// Acá se agregará luego el texto del puntaje
+		// this.scoreLabel.text = this.playerScore;
+
+		// Remove sprite
+		collectable.kill();
+
 	},
 };
