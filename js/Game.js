@@ -42,6 +42,8 @@ SpaceHipster.Game.prototype = {
 			// move on direction of the input
 			this.game.physics.arcade.moveToPointer(this.player, this.playerSpeed);
 		};
+			// colisión entre el jugador y los asteroides
+			this.game.physics.arcade.collide(this.player, this.asteroids, this.hitAsteroid, null, this);
 	},
 	generateAsteroids: function (){
 		this.asteroids = this.game.add.group();
@@ -65,7 +67,22 @@ SpaceHipster.Game.prototype = {
 			asteroid.body.immovable = true;
 			asteroid.body.collideWorldBounds = true;
 		};
+	},
+	hitAsteroid: function(player, asteroid){
+		// reproduccion del sonido
+		this.explosionSound.play();
 
+		// Hacemos explotar al jugador
+		var emitter = this.game.add.emitter(this.player.x, this.player.y, 100);
+		emitter.makeParticles("playerParticle");
+		emitter.minParticleSpeed.setTo(-200,-200);
+		emitter.maxParticleSpeed.setTo(200,200);
+		emitter.gravity=0;
+		emitter.start(true, 1000, null,100);
 
+		// destruimos al jugador
+		this.player.kill();
+
+		this.game.time.events.add(800, this.gameOver,this);
 	},
 };
