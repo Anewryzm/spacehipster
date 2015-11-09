@@ -131,4 +131,8 @@ SpaceHipster.Game.prototype = {
 		this.scoreLabel = this.game.add.text(this.game.width-50, this.game.height-50, text, style);
 		this.scoreLabel.fixedToCamera = true;
 	},
+	gameOver: function(){
+		// pass it the score as a parameter
+		this.game.state.start("MainMenu", true, false, this.playerScore);
+	},
 };

@@ -4,6 +4,12 @@
 SpaceHipster.MainMenu = function(){};
 
 SpaceHipster.MainMenu.prototype = {
+	init: function(score){
+		var score = score || 0;
+		this.highestScore = this.highestScore || 0;
+
+		this.highestScore = Math.max(score, this.highestScore);
+	},
 	create: function(){
 		// show the space tile, repeated
 		this.background = this.game.add.tileSprite(0,0, this.game.width, this.game.height, "space");
