@@ -39,6 +39,8 @@ SpaceHipster.Game.prototype = {
 		this.explosionSound = this.game.add.audio("explosion");
 		this.collectSound = this.game.add.audio("collect");
 
+		// Show score
+		this.showLabels();
 
 	},
 	update: function(){
@@ -116,10 +118,17 @@ SpaceHipster.Game.prototype = {
 		// Update score
 		this.playerScore++;
 		// Acá se agregará luego el texto del puntaje
-		// this.scoreLabel.text = this.playerScore;
+		this.scoreLabel.text = this.playerScore;
 
 		// Remove sprite
 		collectable.kill();
 
+	},
+	showLabels:function(){
+		// score text
+		var text = "0";
+		var style = {font: "20px Arial", fill:"#fff", align: "center"};
+		this.scoreLabel = this.game.add.text(this.game.width-50, this.game.height-50, text, style);
+		this.scoreLabel.fixedToCamera = true;
 	},
 };
